@@ -9,7 +9,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/order")
+@RequestMapping(value = "stm/order")
 public class OrderController {
 
     @Autowired
@@ -20,10 +20,18 @@ public class OrderController {
         return orderService.findAll();
     }
 
+    //--Для валидации важно смотреть свою версию SpringBoot validation dependency в pom.xml,
+    //--иначе валидация просто НЕ СРАБАТЫВАЕТ, хотя проект собирается без ошибок
     @PostMapping("/add")
-    public void addOrder(@Valid @RequestBody OrderDto dto) {
+    public String addOrder(@Valid @RequestBody OrderDto dto) {
 
-        orderService.sendToKafka(dto);
+        String result = "0";
+        try {
+            orderService.sendToKafka(dto);
+        } catch (Exception e) {
+            result = "-1: " + e.getMessage();
+        }
+        return result;
     }
 
 }

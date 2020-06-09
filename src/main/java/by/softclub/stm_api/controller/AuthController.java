@@ -13,7 +13,8 @@ public class AuthController {
     @Autowired
     private AuthenticationService authenticationService;
 
-    @PostMapping(value = "/login")
+    //--ВАЖНО!!! Если используется баллансировщик, то сюда нужен путь вместе с псевдонимом!!!
+    @PostMapping(value = "stm/login")
     public String login(@RequestBody LoginDto dto) {
         return authenticationService.login(dto);
     }

@@ -35,7 +35,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authenticationEntryPoint(restAuthenticationEntryPoint)
                 .and()
                 .authorizeRequests()
-                .antMatchers("/login").permitAll()
+                //--ВАЖНО!!! Если используется баллансировщик, то сюда нужен путь вместе с псевдонимом!!!
+                .antMatchers("/stm/login").permitAll()
                 .anyRequest().authenticated()
                 .and().apply(new JwtConfigurer(jwtTokenProvider));
     }

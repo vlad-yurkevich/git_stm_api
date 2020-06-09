@@ -14,7 +14,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import javax.transaction.Transactional;
+import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
@@ -36,6 +38,18 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private HazelcastInstance hazelcastInstance;
 
     private static final String CACHE_NAME = "sessions";
+
+    @PostConstruct
+    private void prepareDB(){
+        Optional<User> admin = Optional.ofNullable(userRepository.findByUsernameEquals("admin"));
+        if (!admin.isPresent()) {
+            User newAdmin = new User();
+            newAdmin.setUsername("admin");
+            newAdmin.setPassword("$2a$10$FNPeUDux/wMJqJdMzX1Ls.9BGbrQ/qTc3krbOlLCbPqn90GRYSiaC");
+            newAdmin.setEmail("vladislav.yurkevich@softclub.by");
+            userRepository.saveAndFlush(newAdmin);
+        }
+    }
 
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {

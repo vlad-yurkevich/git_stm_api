@@ -1,12 +1,12 @@
-POST localhost:8081/order/add
+POST localhost/stm/order/add
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsInJvbGVzIjpbIlJPTEVfVVNFUiJdLCJpYXQiOjE1OTE2ODMxNjQsImV4cCI6MTU5MTY4Njc2NH0.DlqbGAX1TK3EwiFaIadK6Ka7E8ronTwgINbbQ3uITe0
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsInJvbGVzIjpbIlJPTEVfVVNFUiJdLCJpYXQiOjE1OTE3MTIwMjgsImV4cCI6MTU5MTcxNTYyOH0.YRb9LvLAKm9xHNH3b1UdzCo6CHDQ9jNZbynukkzIMUM
 
 {
-  "sourceCurrency": "BYN1",
-  "targetCurrency": "EUR",
-  "amount": "-888",
-  "fee": "3.000",
+  "sourceCurrency": "BYN",
+  "targetCurrency": "USD",
+  "amount": "8099",
+  "fee": "2.44",
   "userEmail": "vladislav.yurkevich@softclub.by"
 }
 

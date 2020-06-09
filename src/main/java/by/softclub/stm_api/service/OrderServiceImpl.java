@@ -1,12 +1,16 @@
 package by.softclub.stm_api.service;
 
+import by.softclub.stm_api.domain.Currency;
+import by.softclub.stm_api.domain.Order;
 import by.softclub.stm_api.dto.OrderDto;
+import by.softclub.stm_api.repository.CurrencyRepository;
 import by.softclub.stm_api.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -19,7 +23,21 @@ public class OrderServiceImpl implements OrderService {
     private OrderRepository orderRepository;
 
     @Autowired
+    private CurrencyRepository currencyRepository;
+
+    @Autowired
     private KafkaTemplate<Long, OrderDto> kafkaTemplate;
+
+    @PostConstruct
+    private void prepareDB() {
+        if (orderRepository.count() == 0) {
+            currencyRepository.saveAndFlush(new Currency(1, "BYN", "Белорусский рубль"));
+            currencyRepository.saveAndFlush(new Currency(2, "USD", "Доллар США"));
+            currencyRepository.saveAndFlush(new Currency(3, "EUR", "Евро"));
+            currencyRepository.saveAndFlush(new Currency(4, "BTC", "Биткоин"));
+            currencyRepository.saveAndFlush(new Currency(5, "ETH", "Эфир"));
+        }
+    }
 
     @Override
     public List<OrderDto> findAll() {
@@ -41,9 +59,7 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public void sendToKafka(OrderDto dto) {
 
-        //--Пока для тестов
-        System.out.println("Send order " + dto);
-        //kafkaTemplate.send("stm_kafka", dto);
+        kafkaTemplate.send("stm_kafka", dto);
 
     }
 }
