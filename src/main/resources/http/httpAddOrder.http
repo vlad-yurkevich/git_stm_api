@@ -1,0 +1,13 @@
+POST localhost:8081/order/add
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsInJvbGVzIjpbIlJPTEVfVVNFUiJdLCJpYXQiOjE1OTE2ODMxNjQsImV4cCI6MTU5MTY4Njc2NH0.DlqbGAX1TK3EwiFaIadK6Ka7E8ronTwgINbbQ3uITe0
+
+{
+  "sourceCurrency": "BYN1",
+  "targetCurrency": "EUR",
+  "amount": "-888",
+  "fee": "3.000",
+  "userEmail": "vladislav.yurkevich@softclub.by"
+}
+
+###
