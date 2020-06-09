@@ -1,0 +1,9 @@
+POST localhost/stm/login
+Content-Type: application/json
+
+{
+  "login": "admin",
+  "password": "admin"
+}
+
+### Пароль: "admin" Закодированный: "$2a$10$FNPeUDux/wMJqJdMzX1Ls.9BGbrQ/qTc3krbOlLCbPqn90GRYSiaC"
